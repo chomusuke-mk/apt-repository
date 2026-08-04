@@ -23,6 +23,8 @@ jobs:
 
       - name: Fetch and Download Latest Packages
         id: fetch_packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p artifacts
           
@@ -38,7 +40,7 @@ jobs:
             ASSET_NAME="${entry##*:}"
             
             echo "Fetching latest release for $REPO..."
-            LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest")
+            LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$REPO/releases/latest")
             DEB_URL=$(echo "$LATEST_RELEASE" | jq -r ".assets[] | select(.name == \"$ASSET_NAME\") | .browser_download_url")
             
             if [ -n "$DEB_URL" ] && [ "$DEB_URL" != "null" ]; then
