@@ -23,31 +23,28 @@ jobs:
 
       - name: Fetch and Download Latest Packages
         id: fetch_packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p artifacts
-
+          
           # Add new repositories and their .deb asset names here
           # Format: "owner/repo:asset_name.deb"
           REPOS=(
             "chomusuke-mk/vidra:vidra-linux.deb"
             # Example: "chomusuke-mk/another-app:another-app_amd64.deb"
           )
-
+          
           for entry in "${REPOS[@]}"; do
             REPO="${entry%%:*}"
             ASSET_NAME="${entry##*:}"
             
-            echo "Fetching latest release for $REPO..."
-            LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$REPO/releases/latest")
-            DEB_URL=$(echo "$LATEST_RELEASE" | jq -r ".assets[] | select(.name == \"$ASSET_NAME\") | .browser_download_url")
+            DEB_URL="https://github.com/$REPO/releases/latest/download/$ASSET_NAME"
+            echo "Downloading $ASSET_NAME from $DEB_URL..."
             
-            if [ -n "$DEB_URL" ] && [ "$DEB_URL" != "null" ]; then
-              echo "Downloading $ASSET_NAME from $DEB_URL..."
-              wget -qO "artifacts/${REPO##*/}-${ASSET_NAME}" "$DEB_URL"
+            if wget -qO "artifacts/${REPO##*/}-${ASSET_NAME}" "$DEB_URL"; then
+              echo "Successfully downloaded $ASSET_NAME"
             else
-              echo "Warning: Failed to find $ASSET_NAME in latest release of $REPO"
+              echo "Warning: Failed to download $ASSET_NAME from $REPO"
+              rm -f "artifacts/${REPO##*/}-${ASSET_NAME}"
             fi
           done
 
