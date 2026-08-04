@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository (Web Source)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Fetch and Download Latest Packages
         id: fetch_packages
@@ -27,14 +27,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p artifacts
-          
+
           # Add new repositories and their .deb asset names here
           # Format: "owner/repo:asset_name.deb"
           REPOS=(
             "chomusuke-mk/vidra:vidra-linux.deb"
             # Example: "chomusuke-mk/another-app:another-app_amd64.deb"
           )
-          
+
           for entry in "${REPOS[@]}"; do
             REPO="${entry%%:*}"
             ASSET_NAME="${entry##*:}"
@@ -98,7 +98,7 @@ jobs:
           rm -rf conf db artifacts
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .
 
@@ -111,4 +111,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
