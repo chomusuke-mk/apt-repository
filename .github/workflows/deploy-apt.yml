@@ -21,23 +21,33 @@ jobs:
       - name: Checkout Repository (Web Source)
         uses: actions/checkout@v4
 
-      - name: Fetch Latest Vidra Release Info
-        id: fetch_release
-        run: |
-          LATEST_RELEASE=$(curl -s https://api.github.com/repos/chomusuke-mk/vidra/releases/latest)
-          DEB_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[] | select(.name == "vidra-linux.deb") | .browser_download_url')
-          
-          if [ -z "$DEB_URL" ] || [ "$DEB_URL" == "null" ]; then
-            echo "Failed to find vidra-linux.deb in the latest release."
-            exit 1
-          fi
-          
-          echo "DEB_URL=$DEB_URL" >> $GITHUB_OUTPUT
-
-      - name: Download .deb Package
+      - name: Fetch and Download Latest Packages
+        id: fetch_packages
         run: |
           mkdir -p artifacts
-          wget -qO artifacts/vidra-linux.deb "${{ steps.fetch_release.outputs.DEB_URL }}"
+          
+          # Add new repositories and their .deb asset names here
+          # Format: "owner/repo:asset_name.deb"
+          REPOS=(
+            "chomusuke-mk/vidra:vidra-linux.deb"
+            # Example: "chomusuke-mk/another-app:another-app_amd64.deb"
+          )
+          
+          for entry in "${REPOS[@]}"; do
+            REPO="${entry%%:*}"
+            ASSET_NAME="${entry##*:}"
+            
+            echo "Fetching latest release for $REPO..."
+            LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest")
+            DEB_URL=$(echo "$LATEST_RELEASE" | jq -r ".assets[] | select(.name == \"$ASSET_NAME\") | .browser_download_url")
+            
+            if [ -n "$DEB_URL" ] && [ "$DEB_URL" != "null" ]; then
+              echo "Downloading $ASSET_NAME from $DEB_URL..."
+              wget -qO "artifacts/${REPO##*/}-${ASSET_NAME}" "$DEB_URL"
+            else
+              echo "Warning: Failed to find $ASSET_NAME in latest release of $REPO"
+            fi
+          done
 
       - name: Setup reprepro and GPG
         env:
@@ -67,8 +77,13 @@ jobs:
           Description: Official APT Repository for Vidra
           EOF
 
-          # Inject DEB into repository
-          reprepro -b . includedeb stable artifacts/vidra-linux.deb
+          # Inject all DEBs into repository
+          for pkg in artifacts/*.deb; do
+            if [ -f "$pkg" ]; then
+              echo "Injecting $pkg into repository..."
+              reprepro -b . includedeb stable "$pkg"
+            fi
+          done
 
           # Manually sign the Release files to avoid GPGME errors
           cd dists/stable
