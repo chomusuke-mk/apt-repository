@@ -1,0 +1,38 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: chomusuke-mk
+Label: Vidra APT Repository
+Codename: stable
+Date: Tue, 04 Aug 2026 08:15:52 UTC
+Architectures: amd64
+Components: main
+Description: Official APT Repository for Vidra
+MD5Sum:
+ c8ee7a927afceb99379505d0d97854b3 444 main/binary-amd64/Packages
+ edbb3918a7ddd8db9b088d08a1e842e7 344 main/binary-amd64/Packages.gz
+ 6189c0a30d67ecfc643540d813ed72cc 132 main/binary-amd64/Release
+SHA1:
+ dd0127c2ba31d4728bbf37f2f19ca4a4fb191db5 444 main/binary-amd64/Packages
+ ec9c18f7d9957ab85ade3637e2f4e18e631eeac2 344 main/binary-amd64/Packages.gz
+ c1854b6aa7a237f7f6c5350e64fdc36668a8b814 132 main/binary-amd64/Release
+SHA256:
+ aef62f701bda2f6190a19b69626c998d5b55d0fa31ecb1d35be0e2c26f9796b2 444 main/binary-amd64/Packages
+ de73dfc8183c1f45fe171a836a354b48d7161da556881073e32f750c661c1dd8 344 main/binary-amd64/Packages.gz
+ 6da0a40743ca7d40beb6fc839b7e8a658d6e4d679bcda0075070f61b4cf8b0ce 132 main/binary-amd64/Release
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEXTF6MprstND73haFRwKCaW1xY5wFAmpxn7gACgkQRwKCaW1x
+Y5wx1xAApo05c+pZcpZYhEg+TPb6Xs1s216BtmExtBgXpv4Sk2M4CHWzsZRRS+If
+970M25BMI5BfNTGE9lU9rw6kVp+5ylBsc1+KmMY50W9x6U1sFQpC562H8YSDlYD1
+BmmvyweRjD+iFRMrNs+jO2DNC6AvGoxzf+fkCYT0b+3DQAa0i00qzgZQBR6+cMp8
+LAkyRqEd3qMFxohtJnvySxRqrx4bW33nwrcdvjHzOZVKPe+ZQtEFrQuYhQEwL14c
+Ot5FXewcMo0gp3eATAQPyLFk+r16x/vdlLuSW4XJnCuNDKgj+AvO8u8JB5eoGUD4
+iyzoB1AA54I200l3zyhjkP/sMbKZyYdxZOnX9R9AuADS9j3BvxCpsfVkoL5/pRuh
+NTxuV3JH3beJv3eezdPEEFWaZMpvpsigdxEBH6WBYwA85zBDfnVFRzlq2bBN1jyx
+GY2q08xHSbENJPw/0I96+KJSN7Wp0JjOtvSnOChdMMow5Hzf8MM06pNglKISkawv
+C5f83Xj0bAWeUR2pRHShOUQ19LSMGRxcJ/B2sBo6DM4Xj9CNxP7xAVB4SBl/tGr7
+kJRPACEfC1DPhfxl3VMAtB8USR2/YU2tJjr4W2rrjqx5swwzsPI2Mte0Q7OV/kuK
+uCX7fsvP8SJdmcABnHiXmkMCUCsf7ZhQPV9FB56cOrUmioBPrew=
+=yyME
+-----END PGP SIGNATURE-----

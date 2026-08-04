@@ -1,0 +1,5 @@
+Component: main
+Origin: chomusuke-mk
+Label: Vidra APT Repository
+Architecture: amd64
+Description: Official APT Repository for Vidra
