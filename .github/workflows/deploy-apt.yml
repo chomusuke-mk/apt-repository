@@ -70,6 +70,7 @@ jobs:
           cat <<EOF > conf/distributions
           Origin: chomusuke-mk
           Label: Vidra APT Repository
+          Suite: stable
           Codename: stable
           Architectures: amd64
           Components: main
