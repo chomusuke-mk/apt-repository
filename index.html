@@ -3,37 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidra APT Repository</title>
-    <meta name="description" content="Official APT repository for Vidra, the advanced video download manager for Linux.">
+    <title>Chomusuke APT Repository</title>
+    <meta name="description" content="Official APT repository for Chomusuke software on Linux.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Vidra APT</h1>
-        <p>Official Debian/Ubuntu Repository for Vidra</p>
+        <h1>Chomusuke APT</h1>
+        <p>Official Debian/Ubuntu Repository for Chomusuke software</p>
     </header>
 
     <main>
         <div class="card">
-            <h2>📦 Installation via APT</h2>
-            <p style="margin-bottom: 20px; color: var(--text-secondary);">Run the following commands in your terminal to add the repository and install Vidra automatically on your system.</p>
+            <h2>📦 Add the Repository</h2>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">Run the following commands in your terminal to securely add this repository to your system.</p>
             
-            <div class="code-block" id="install-code">
-                <button class="copy-btn" onclick="copyCode()">Copy</button>
+            <div class="code-block" id="install-repo">
+                <button class="copy-btn" onclick="copyCode('install-repo', this)">Copy</button>
                 <code># 1. Download the public security key
 wget -qO- https://apt.chomusuke.dev/public.key | sudo tee /etc/apt/keyrings/chomusuke.asc > /dev/null
 
 # 2. Add the repository to your sources list
-echo "deb [signed-by=/etc/apt/keyrings/chomusuke.asc] https://apt.chomusuke.dev/ stable main" | sudo tee /etc/apt/sources.list.d/vidra.list
+echo "deb [signed-by=/etc/apt/keyrings/chomusuke.asc] https://apt.chomusuke.dev/ stable main" | sudo tee /etc/apt/sources.list.d/chomusuke.list
 
-# 3. Update and install the app
-sudo apt update
-sudo apt install vidra</code>
+# 3. Update package lists
+sudo apt update</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🚀 Available Packages</h2>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">Once the repository is added, you can install the available software.</p>
+            
+            <h3 style="margin-bottom: 10px; font-size: 1.2rem; color: #fff;">▶ Vidra</h3>
+            <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 0.95rem;">Advanced video download manager for desktop.</p>
+            
+            <div class="code-block" id="install-vidra">
+                <button class="copy-btn" onclick="copyCode('install-vidra', this)">Copy</button>
+                <code>sudo apt install vidra</code>
             </div>
 
             <div class="note">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                <span>Once installed, you will receive updates seamlessly when you run <strong>sudo apt update && sudo apt upgrade</strong>.</span>
+                <span>You will receive seamless automatic updates for all installed packages via <strong>sudo apt update && sudo apt upgrade</strong>.</span>
             </div>
         </div>
     </main>
@@ -44,10 +56,9 @@ sudo apt install vidra</code>
     </footer>
 
     <script>
-        function copyCode() {
-            const codeText = document.querySelector('#install-code code').innerText;
+        function copyCode(id, btn) {
+            const codeText = document.querySelector('#' + id + ' code').innerText;
             navigator.clipboard.writeText(codeText).then(() => {
-                const btn = document.querySelector('.copy-btn');
                 const originalText = btn.innerText;
                 btn.innerText = 'Copied!';
                 btn.style.background = '#27c93f';
