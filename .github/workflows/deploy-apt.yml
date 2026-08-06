@@ -92,13 +92,14 @@ jobs:
           gpg --batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" -abs -o Release.gpg Release
           cd ../..
 
-          # Cleanup unnecessary build directories before uploading
-          rm -rf conf db artifacts
+          # Prepare deployment directory
+          mkdir public
+          mv dists pool public.key index.html style.css public/
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v5
         with:
-          path: .
+          path: public
 
   deploy:
     environment:
